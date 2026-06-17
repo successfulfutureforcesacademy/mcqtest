@@ -1,77 +1,167 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>MCQ Test System</title>
-  <style>
-    body { font-family: Arial; padding: 20px; }
-    .box { max-width: 500px; margin: auto; }
-    button { margin: 5px; padding: 10px; }
-  </style>
+<meta charset="UTF-8">
+<title>VIP MCQ Test System</title>
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background: linear-gradient(135deg,#0f172a,#1e293b);
+    color:white;
+}
+.container{
+    max-width:800px;
+    margin:50px auto;
+    background:#111827;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+h1{text-align:center;color:#22c55e;}
+
+.question-box{
+    font-size:20px;
+    margin-bottom:15px;
+}
+
+.option{
+    display:block;
+    background:#1f2937;
+    padding:10px;
+    margin:8px 0;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+.option:hover{
+    background:#374151;
+}
+
+.buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+}
+
+button{
+    padding:10px 15px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.next{background:#22c55e;color:black;}
+.prev{background:#3b82f6;color:white;}
+.skip{background:#f59e0b;color:black;}
+
+.timer{
+    text-align:right;
+    font-size:18px;
+    color:#ef4444;
+}
+
+.result{
+    text-align:center;
+}
+</style>
 </head>
 <body>
 
-<div class="box">
+<div class="container">
+    <h1>MCQ Test System</h1>
+    <div class="timer">Time: <span id="time">60</span>s</div>
 
-  <h2>Student Login</h2>
+    <div id="quiz">
+        <div class="question-box" id="question"></div>
+        <div id="options"></div>
 
-  <input id="name" placeholder="Name"><br><br>
-  <input id="phone" placeholder="Phone"><br><br>
+        <div class="buttons">
+            <button class="prev" onclick="prevQ()">Previous</button>
+            <button class="skip" onclick="skipQ()">Skip</button>
+            <button class="next" onclick="nextQ()">Next</button>
+        </div>
+    </div>
 
-  <button onclick="startTest()">Start Test</button>
-
-  <hr>
-
-  <div id="quiz" style="display:none;">
-    <h3 id="question"></h3>
-
-    <button onclick="answer('A')">A</button>
-    <button onclick="answer('B')">B</button>
-    <button onclick="answer('C')">C</button>
-    <button onclick="answer('D')">D</button>
-
-    <br><br>
-
-    <button onclick="nextQ()">Next</button>
-
-    <p id="score"></p>
-  </div>
-
+    <div id="result" class="result" style="display:none;"></div>
 </div>
 
 <script>
-let index = 0;
-let score = 0;
-
-let questions = [
-  {q: "2 + 2 = ?", a: "A"},
-  {q: "Capital of Pakistan?", a: "B"}
+const questions = [
+    {q:"HTML ka full form?", options:["Hyper Text Markup Language","High Text Machine Language","Home Tool Markup Language"], answer:0},
+    {q:"CSS kya hai?", options:["Styling Language","Database","Server"], answer:0},
+    {q:"JS use hota hai?", options:["Backend","Interactivity","Design"], answer:1}
 ];
 
-function startTest(){
-  document.getElementById("quiz").style.display = "block";
-  loadQ();
-}
+let current = 0;
+let score = 0;
+let selected = Array(questions.length).fill(null);
+let time = 60;
 
 function loadQ(){
-  document.getElementById("question").innerText = questions[index].q;
-}
+    let q = questions[current];
+    document.getElementById("question").innerText = q.q;
 
-function answer(ans){
-  if(ans === questions[index].a){
-    score++;
-  }
+    let optDiv = document.getElementById("options");
+    optDiv.innerHTML = "";
+
+    q.options.forEach((opt,i)=>{
+        let div = document.createElement("div");
+        div.className="option";
+        div.innerText = opt;
+        div.onclick = ()=>{
+            selected[current]=i;
+        };
+        optDiv.appendChild(div);
+    });
 }
 
 function nextQ(){
-  index++;
-
-  if(index < questions.length){
-    loadQ();
-  } else {
-    document.getElementById("quiz").innerHTML =
-      "<h2>Test Finished</h2><p>Your Score: " + score + "</p>";
-  }
+    if(current < questions.length-1){
+        current++;
+        loadQ();
+    } else {
+        showResult();
+    }
 }
+
+function prevQ(){
+    if(current > 0){
+        current--;
+        loadQ();
+    }
+}
+
+function skipQ(){
+    nextQ();
+}
+
+function showResult(){
+    document.getElementById("quiz").style.display="none";
+    document.getElementById("result").style.display="block";
+
+    questions.forEach((q,i)=>{
+        if(selected[i] === q.answer){
+            score++;
+        }
+    });
+
+    document.getElementById("result").innerHTML =
+        `<h2>Your Result</h2>
+         <h1>${score} / ${questions.length}</h1>`;
+}
+
+setInterval(()=>{
+    time--;
+    document.getElementById("time").innerText=time;
+
+    if(time<=0){
+        showResult();
+    }
+},1000);
+
+loadQ();
 </script>
 
 </body>
