@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MCQ Test System</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .box { max-width: 500px; margin: auto; }
+    button { margin: 5px; padding: 10px; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+
+  <h2>Student Login</h2>
+
+  <input id="name" placeholder="Name"><br><br>
+  <input id="phone" placeholder="Phone"><br><br>
+
+  <button onclick="startTest()">Start Test</button>
+
+  <hr>
+
+  <div id="quiz" style="display:none;">
+    <h3 id="question"></h3>
+
+    <button onclick="answer('A')">A</button>
+    <button onclick="answer('B')">B</button>
+    <button onclick="answer('C')">C</button>
+    <button onclick="answer('D')">D</button>
+
+    <br><br>
+
+    <button onclick="nextQ()">Next</button>
+
+    <p id="score"></p>
+  </div>
+
+</div>
+
+<script>
+let index = 0;
+let score = 0;
+
+let questions = [
+  {q: "2 + 2 = ?", a: "A"},
+  {q: "Capital of Pakistan?", a: "B"}
+];
+
+function startTest(){
+  document.getElementById("quiz").style.display = "block";
+  loadQ();
+}
+
+function loadQ(){
+  document.getElementById("question").innerText = questions[index].q;
+}
+
+function answer(ans){
+  if(ans === questions[index].a){
+    score++;
+  }
+}
+
+function nextQ(){
+  index++;
+
+  if(index < questions.length){
+    loadQ();
+  } else {
+    document.getElementById("quiz").innerHTML =
+      "<h2>Test Finished</h2><p>Your Score: " + score + "</p>";
+  }
+}
+</script>
+
+</body>
+</html>
