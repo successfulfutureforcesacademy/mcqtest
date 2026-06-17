@@ -5,9 +5,33 @@
 </head>
 <body>
 
-<h1>Welcome to Quiz</h1>
+<h1>Quiz Page</h1>
 
-<p>Login successful 🎉</p>
+<p>Login successful 👍</p>
+
+<button onclick="save()">Save Result</button>
+
+<script>
+
+const API_URL = "https://script.google.com/macros/s/AKfycbyPpW80XOgbmdtJwYJRJDnKDA82eGUeXmasYTfnuiaAVfjKtmOwQE0k3spikds7I6EB/exec";
+
+function save() {
+
+  fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "saveResult",
+      name: "Ali",
+      phone: "123",
+      score: 80
+    })
+  });
+
+  alert("Result Saved");
+
+}
+
+</script>
 
 </body>
 </html>
