@@ -7,14 +7,14 @@
 
 <h2>Student Login</h2>
 
-<input type="text" id="name" placeholder="Enter Name"><br><br>
-<input type="text" id="phone" placeholder="Enter Phone"><br><br>
+<input type="text" id="name" placeholder="Name"><br><br>
+<input type="text" id="phone" placeholder="Phone"><br><br>
 
 <button onclick="login()">Login</button>
 
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycbwIayTdqC2olA9Sdc8sQ9WCNIBY5jMBOlgIfan36F2KiMN4auOgmTskswIBfZJteuRc/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyPpW80XOgbmdtJwYJRJDnKDA82eGUeXmasYTfnuiaAVfjKtmOwQE0k3spikds7I6EB/exec";
 
 function login() {
 
@@ -35,7 +35,7 @@ function login() {
     if (data.success === true) {
       window.location.href = "quiz.html";
     } else {
-      alert("You are not registered");
+      alert("Not registered user");
     }
 
   });
