@@ -1,96 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Quiz</title>
+  <title>Quiz</title>
 </head>
-<body style="font-family:Arial; background:#222; color:white;">
+<body>
 
-<h3 id="student"></h3>
-<h2 id="q"></h2>
+<h1>Welcome to Quiz</h1>
 
-<div id="options"></div>
-
-<br>
-
-<button onclick="prev()">Prev</button>
-<button onclick="next()">Next</button>
-<button onclick="skip()">Skip</button>
-
-<h3>Time: <span id="time">60</span></h3>
-
-<script>
-let questions = [
-    {q:"HTML full form?", options:["Hyper Text Markup Language","Wrong","Wrong"], ans:0},
-    {q:"CSS use for?", options:["Design","Database","Server"], ans:0},
-    {q:"JS is?", options:["Language","Car","Food"], ans:0}
-];
-
-let i = 0;
-let score = 0;
-let selected = [];
-let time = 60;
-
-document.getElementById("student").innerText =
-"Student: " + localStorage.getItem("studentName");
-
-function load(){
-    document.getElementById("q").innerText = questions[i].q;
-
-    let opt = document.getElementById("options");
-    opt.innerHTML="";
-
-    questions[i].options.forEach((o,index)=>{
-        let btn = document.createElement("button");
-        btn.innerHTML = o;
-        btn.onclick = ()=>{
-            selected[i]=index;
-        };
-        opt.appendChild(btn);
-        opt.appendChild(document.createElement("br"));
-    });
-}
-
-function next(){
-    if(i<questions.length-1){
-        i++;
-        load();
-    }else{
-        result();
-    }
-}
-
-function prev(){
-    if(i>0){
-        i--;
-        load();
-    }
-}
-
-function skip(){
-    next();
-}
-
-function result(){
-    questions.forEach((q,idx)=>{
-        if(selected[idx]==q.ans){
-            score++;
-        }
-    });
-
-    localStorage.setItem("score",score);
-    window.location.href="result.html";
-}
-
-setInterval(()=>{
-    time--;
-    document.getElementById("time").innerText=time;
-    if(time<=0){
-        result();
-    }
-},1000);
-
-load();
-</script>
+<p>Login successful 🎉</p>
 
 </body>
 </html>
