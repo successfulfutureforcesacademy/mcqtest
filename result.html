@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Result</title>
+</head>
+<body style="text-align:center; font-family:Arial; background:#111; color:white;">
+
+<h1>Result</h1>
+
+<h2 id="name"></h2>
+<h1 id="score"></h1>
+
+<script>
+document.getElementById("name").innerText =
+localStorage.getItem("studentName");
+
+document.getElementById("score").innerText =
+"Score: " + localStorage.getItem("score");
+</script>
+
+</body>
+</html>
