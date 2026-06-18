@@ -1,45 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
+<title>Login</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
-<body>
 
-<h2>Student Login</h2>
+<body style="margin:0; font-family:Poppins; background:#0b1220; color:white; display:flex; align-items:center; justify-content:center; height:100vh;">
 
-<input type="text" id="name" placeholder="Name"><br><br>
-<input type="text" id="phone" placeholder="Phone"><br><br>
+<!-- 🟢 DESIGN SECTION -->
+<div style="text-align:center; padding:40px; background:rgba(255,255,255,0.05); border-radius:12px; width:300px;">
 
-<button onclick="login()">Login</button>
+  <h2 style="color:#22c55e;">Student Login</h2>
 
+  <input id="name" placeholder="Enter Name"
+    style="padding:10px; margin:5px; width:100%;"><br>
+
+  <input id="phone" placeholder="Enter Phone"
+    style="padding:10px; margin:5px; width:100%;"><br>
+
+  <button onclick="loginUser()"
+    style="padding:10px 20px; background:#22c55e; border:none; color:white; border-radius:6px; width:100%;">
+    Login
+  </button>
+
+  <p id="msg"></p>
+
+</div>
+
+<!-- 🟡 LOGIC SECTION -->
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycbyPpW80XOgbmdtJwYJRJDnKDA82eGUeXmasYTfnuiaAVfjKtmOwQE0k3spikds7I6EB/exec";
+/* 🔴 SUPABASE CONFIG (CHANGE ONLY THIS) */
+const supabaseUrl = "🔥 PASTE YOUR SUPABASE PROJECT URL HERE 🔥";
+const supabaseKey = "🔥 PASTE YOUR SUPABASE ANON KEY HERE 🔥";
 
-function login() {
+const client = supabase.createClient(https://omabmywlqxgelafokdna.supabase.co/, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tYWJteXdscXhnZWxhZm9rZG5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3NjM0MDYsImV4cCI6MjA5NzMzOTQwNn0.9JlCl6F88q5hxQjNde5UtGQnL8-ypACqAxcxgg7f1dg);
 
-  var name = document.getElementById("name").value;
-  var phone = document.getElementById("phone").value;
+async function loginUser(){
 
-  fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "login",
-      name: name,
-      phone: phone
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
 
-    if (data.success === true) {
-      window.location.href = "quiz.html";
-    } else {
-      alert("Not registered user");
-    }
+  document.getElementById("msg").innerText = "Checking...";
 
-  });
+  let { data } = await client
+    .from("students")
+    .select("*")
+    .eq("name", name)
+    .eq("phone", phone);
 
+  if(data.length > 0){
+
+    localStorage.setItem("name", name);
+    localStorage.setItem("phone", phone);
+
+    window.location.href = "quiz.html";
+
+  } else {
+    document.getElementById("msg").innerText = "Not Registered ❌";
+  }
 }
 
 </script>
