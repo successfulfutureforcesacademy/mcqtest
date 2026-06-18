@@ -1,34 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Quiz</title>
+<title>Quiz</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
-<body>
 
-<h1>Quiz Page</h1>
+<body style="margin:0; font-family:Poppins; background:#0b1220; color:white; display:flex; align-items:center; justify-content:center; height:100vh;">
 
-<p>Login successful 👍</p>
+<!-- 🟢 DESIGN SECTION -->
+<div style="text-align:center; padding:40px; background:rgba(255,255,255,0.05); border-radius:12px; width:350px;">
 
-<button onclick="save()">Save Result</button>
+  <h2 style="color:#22c55e;">MCQ Quiz</h2>
 
+  <p>Q1: Capital of Pakistan?</p>
+
+  <button onclick="add(1)">Islamabad</button>
+  <button onclick="add(0)">Lahore</button>
+
+  <br><br>
+
+  <button onclick="submitQuiz()"
+    style="padding:10px 20px; background:#22c55e; border:none; color:white; border-radius:6px;">
+    Submit
+  </button>
+
+  <p id="status"></p>
+
+</div>
+
+<!-- 🟡 LOGIC SECTION -->
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycbyPpW80XOgbmdtJwYJRJDnKDA82eGUeXmasYTfnuiaAVfjKtmOwQE0k3spikds7I6EB/exec";
+/* 🔴 SUPABASE CONFIG (CHANGE ONLY THIS) */
+const supabaseUrl = "🔥 PASTE YOUR SUPABASE PROJECT URL HERE 🔥";
+const supabaseKey = "🔥 PASTE YOUR SUPABASE ANON KEY HERE 🔥";
 
-function save() {
+const client = supabase.createClient(https://omabmywlqxgelafokdna.supabase.co/, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9tYWJteXdscXhnZWxhZm9rZG5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE3NjM0MDYsImV4cCI6MjA5NzMzOTQwNn0.9JlCl6F88q5hxQjNde5UtGQnL8-ypACqAxcxgg7f1dg);
 
-  fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "saveResult",
-      name: "Ali",
-      phone: "123",
-      score: 80
-    })
-  });
+let score = 0;
 
-  alert("Result Saved");
+function add(v){
+  score += v;
+}
 
+async function submitQuiz(){
+
+  let name = localStorage.getItem("name");
+  let phone = localStorage.getItem("phone");
+
+  document.getElementById("status").innerText = "Submitting...";
+
+  await client.from("results").insert([{
+    name: name,
+    phone: phone,
+    score: score
+  }]);
+
+  window.location.href = "result.html";
 }
 
 </script>
