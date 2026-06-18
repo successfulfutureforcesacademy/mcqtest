@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Start</title>
+<title>MCQ Academy</title>
 </head>
-<body style="text-align:center; font-family:Arial; background:#111; color:white;">
 
-<h1>MCQ Test System</h1>
+<body style="margin:0; font-family:Poppins; background:#0b1220; color:white; text-align:center;">
 
-<button onclick="go()">Start Login</button>
+<!-- 🟢 DESIGN SECTION -->
+<div style="margin-top:120px;">
+  <h1 style="color:#22c55e; font-size:40px;">MCQ ACADEMY</h1>
+  <p style="color:#94a3b8;">Professional Test System</p>
 
+  <button onclick="goLogin()"
+    style="padding:12px 25px; background:#22c55e; border:none; color:white; font-size:18px; border-radius:8px;">
+    Start Test
+  </button>
+</div>
+
+<!-- 🟡 LOGIC SECTION -->
 <script>
-function go(){
-    window.location.href = "login.html";
+function goLogin(){
+  window.location.href = "login.html";
 }
 </script>
 
