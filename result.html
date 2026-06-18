@@ -2,20 +2,25 @@
 <html>
 <head>
 <title>Result</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
-<body style="text-align:center; font-family:Arial; background:#111; color:white;">
 
-<h1>Result</h1>
+<body style="margin:0; font-family:Poppins; background:#0b1220; color:white; display:flex; align-items:center; justify-content:center; height:100vh;">
 
-<h2 id="name"></h2>
-<h1 id="score"></h1>
+<!-- 🟢 DESIGN SECTION -->
+<div style="text-align:center; padding:40px; background:rgba(255,255,255,0.05); border-radius:12px;">
 
+  <h1 style="color:#22c55e;">Result</h1>
+
+  <h2 id="name"></h2>
+  <p>Test Submitted Successfully ✅</p>
+
+</div>
+
+<!-- 🟡 LOGIC SECTION -->
 <script>
 document.getElementById("name").innerText =
-localStorage.getItem("studentName");
-
-document.getElementById("score").innerText =
-"Score: " + localStorage.getItem("score");
+localStorage.getItem("name");
 </script>
 
 </body>
